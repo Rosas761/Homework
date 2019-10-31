@@ -35,11 +35,11 @@ def scrape_info():
     # %%
     headline = headlines[0]
     news_title = headline.a.text
-    News_Title = "News Title: " + news_title
+    News_Title = news_title
             
     paragraph = paragraphs[0]
     news_p = paragraph.text
-    Content = "Content: " + news_p
+    Content =  news_p
     
 
     # %%
@@ -88,6 +88,7 @@ def scrape_info():
 
 
     # %%
+    # 5.
     browser.get(url5)
 
 
