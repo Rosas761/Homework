@@ -15,12 +15,20 @@ data.forEach(Alien =>{
 });
 
 button.on("click", function() {
+    tbody.html("");
     var inputElement = d3.select("#datetime");
     var inputValue = inputElement.property("value");
-    var row = tbody.append("tr");
-    var filteredData = tableData.filter(stefan => stefan.datetime === inputValue);
-    //var dates = filteredData.map(stefan => stefan.datetime);
-    tbody.html("");
-    tbody.append("td").text(filteredData);
-    console.log(filteredData);
-    });
+    var filteredData = tableData.filter(thing => thing.datetime === inputValue);
+    var dates = filteredData.map(thing2 => thing2.datetime);
+    
+    filteredData.forEach(row =>{
+        var tr = tbody.append('tr')
+        tr.append('td').text(row.datetime);
+        tr.append('td').text(row.city);
+        tr.append('td').text(row.state);
+        tr.append('td').text(row.country);
+        tr.append('td').text(row.shape);
+        tr.append('td').text(row.durationMinutes);
+        tr.append('td').text(row.comments);
+    })   
+});
