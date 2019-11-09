@@ -2,18 +2,18 @@ console.log("Hello World")
 function buildMetadata(sample) {
   var table = d3.select("#sample-metadata");
   var url = `/metadata/${sample}`;
-  d3.json(url).then(function (response) { // <--- I think using response is whats wrong 
+  console.log(url)
+  d3.json(url).then(function (sample_metadata) { // <--- I think using response is whats wrong 
 
-    console.log(response) 
-    var data = response;
+    console.log(sample_metadata) 
+    var data1 = sample_metadata;
 
     table.html("");
-    data.forEach(point => {
-      Object.entries(point).forEach(([key, value]) => {
+    
+      Object.entries(sample_metadata).forEach(([key, value]) => {
         table.append("h6").text(value);
         //table.append("panel-body").text()
       });
-    });
 
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
