@@ -3,35 +3,67 @@ function buildMetadata(sample) {
   var table = d3.select("#sample-metadata");
   var url = `/metadata/${sample}`;
   console.log(url)
-  d3.json(url).then(function (sample_metadata) { // <--- I think using response is whats wrong 
+  d3.json(url).then(function (sample_metadata) {
 
-    console.log(sample_metadata) 
+    console.log(sample_metadata)
     var data1 = sample_metadata;
 
     table.html("");
-    
-      Object.entries(sample_metadata).forEach(([key, value]) => {
-        table.append("h6").text(value);
-        //table.append("panel-body").text()
-      });
 
-    // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-
+    Object.entries(sample_metadata).forEach(([key, value]) => {
+      table.append("h6").text(`${key}: ${value}`);
+    });
   });
 }
 
-function buildCharts(sample) {
+function buildCharts(sample2) {
+  var sample_list = []
+  var pie = d3.select("#pie");
+  var bubble = d3.select("#bubble")
+  var url2 = `/samples/${sample2}`;
+  
+  d3.json(url2).then(function (piedata) {
 
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
+    pie.html("");
 
-  // @TODO: Build a Bubble Chart using the sample data
+    Object.entries(piedata).forEach(([key, value]) => {
 
-  // @TODO: Build a Pie Chart
-  // HINT: You will need to use slice() to grab the top 10 sample_values,
-  // otu_ids, and labels (10 each).
+      const all_values = [];
+      const all_keys = [];
+      
+      all_values.push([value]);
+      all_keys.push([key]);
+      
+      const values = all_values.slice(0, 10);
+      const keys = all_keys.slice(0,10)
+
+      
+      var data = [{
+        values: values,
+        labels: keys,
+        type: "pie"
+      }];
+    
+      var layout = {
+        height: 600,
+        width: 800
+      };
+    
+      Plotly.plot("pie", data, layout);
+    
+    });
+  
+    d3.json(url2).then(function (bubbledata) {
+
+
+    });
+
+    // HINT: You will need to use slice() to grab the top 10 sample_values,
+    // otu_ids, and labels (10 each).
+  });
 }
+
+
 
 function init() {
   // Grab a reference to the dropdown select element
