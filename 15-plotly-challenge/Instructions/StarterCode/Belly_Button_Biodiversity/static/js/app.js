@@ -17,49 +17,66 @@ function buildMetadata(sample) {
 }
 
 function buildCharts(sample2) {
-  var sample_list = []
   var pie = d3.select("#pie");
   var bubble = d3.select("#bubble")
   var url2 = `/samples/${sample2}`;
-  
+
   d3.json(url2).then(function (piedata) {
 
     pie.html("");
 
-    Object.entries(piedata).forEach(([key, value]) => {
+    var graph_values = piedata.sample_values.slice(0, 10);
+    var graph_keys = piedata.otu_ids.slice(0, 10);
 
-      const all_values = [];
-      const all_keys = [];
-      
-      all_values.push([value]);
-      all_keys.push([key]);
-      
-      const values = all_values.slice(0, 10);
-      const keys = all_keys.slice(0,10)
 
-      
-      var data = [{
-        values: values,
-        labels: keys,
-        type: "pie"
-      }];
+    var data = [{
+      values: graph_values,
+      labels: graph_keys,
+      type: "pie"
+    }];
+
+    var layout = {
+      height: 600,
+      width: 600
+    };
+
+    Plotly.plot("pie", data, layout);
+
+
+
+  });
+
+  d3.json(url2).then(function (bubbledata) {
+
+    bubble.html("");
+
+    var otu_ids = bubbledata.otu_ids;
+    var sample_values = bubbledata.sample_values;
+    var otu_labels = bubbledata.otu_labels;
+
+    var trace1 = {
+      x: otu_ids,
+      y: sample_values,
+      mode: 'markers',
+      marker: {
+        size: sample_values,
+        color: otu_ids
+      },
+      text: otu_labels
+
+    };
     
-      var layout = {
-        height: 600,
-        width: 800
-      };
+    var data = [trace1];
     
-      Plotly.plot("pie", data, layout);
+    var layout = {
+      title: 'Marker Size',
+      showlegend: false,
+      height: 600,
+      width: 1400
+    };
     
-    });
-  
-    d3.json(url2).then(function (bubbledata) {
+    Plotly.newPlot('bubble', data, layout);
 
-
-    });
-
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
   });
 }
 
