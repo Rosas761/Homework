@@ -1,0 +1,22 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "SB_Project",
+            "dialect": "PostgreSQL",
+            "name": "local_host",
+            "password": "postgres",
+            "port": 5432,
+            "server": "localhost",
+            "username": "Rosas761"
+        },
+        {
+            "database": "SB_Project",
+            "dialect": "PostgreSQL",
+            "name": "localhost",
+            "password": "postgres",
+            "port": 5432,
+            "server": "localhost",
+            "username": "postgres"
+        }
+    ]
+}
